@@ -1,19 +1,35 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import BookingD from './BookingD';
+
+
 
 const Bookings = () => {
     const {user} = useContext(AuthContext);
     const [bookings,setBookings] = useState([]);
     const componentPdf=useRef();
+    const navigate = useNavigate()
     
-    const url = `http://localhost:5000/bookings?email=${user.email}`
+    const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(()=>{
-        fetch(url)
+        fetch(url,{
+          method:'GET',
+          headers:{
+            authorization:`Bearer ${ localStorage.getItem('car-token')}`
+          }
+        })
         .then(res => res.json())
-        .then(data =>setBookings(data))
-    },[])
+        .then(data =>
+          {
+            if(!data.error){
+              setBookings(data)
+            }else{
+              navigate('/')
+            }
+          })
+    },[url,navigate])
 
  //delete work start
    const handleDelete = id =>{
