@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthContext/AuthContext';
+import SocialLogin from '../../Shared/SocialLogin';
 import img from '../img/login.svg';
 const Login = () => {
 const {login} = useContext(AuthContext)
@@ -89,7 +90,10 @@ fetch('http://localhost:5000/jwt',{
       <div className='text-center p-2'>
          <p>Don't have an account?<Link className='text-orange-500' to="/register">Register</Link></p>
       </div>
-     
+      <div className='text-center'>
+         <SocialLogin></SocialLogin>
+      </div>
+    
         </div>
 </form>
 

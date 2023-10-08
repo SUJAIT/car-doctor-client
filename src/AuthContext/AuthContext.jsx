@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../Auth/Auth';
 
@@ -9,6 +9,7 @@ const auth = getAuth(app);
 const CreateContext = ({children}) => {
 const [user,setUser]= useState(null);
 const [loading,setLoading] = useState(true);
+const provider = new GoogleAuthProvider();
 
 // Create User Start
   const createUser = (email,password) =>{
@@ -33,6 +34,12 @@ const logOut = () =>{
 
 //logOut
 
+//Google Popup start
+const popup = () =>{
+  return signInWithPopup(auth, provider)
+}
+//Google Popup End
+
 //user Check Start
 //{observer} user auth state,,User Asa Kina ta chack korba...
 useEffect(()=>{
@@ -54,7 +61,8 @@ useEffect(()=>{
        loading,
        createUser,
        login,
-       logOut
+       logOut,
+       popup
     }
 
     return (
