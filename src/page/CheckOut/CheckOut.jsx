@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthContext/AuthContext';
 
 const CheckOut = () => {
     const service = useLoaderData();
     const {title,_id,price,service_id,img} = service;
     const {user} = useContext(AuthContext)
-
+const navigate= useNavigate()
     const formHandler = event =>{
         event.preventDefault();
         const form = event.target;
@@ -32,8 +33,20 @@ fetch('http://localhost:5000/bookings',{
 })
 .then(res => res.json())
 .then(data=>{
-  console.log(data)
+  if(data){
+Swal.fire({
+  position: 'top-center',
+  icon: 'success',
+  title: 'Your Order Success',
+  showConfirmButton: false,
+  timer: 1500
 })
+navigate('/')
+  }
+})
+
+
+
 
     }
 

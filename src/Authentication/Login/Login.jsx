@@ -26,28 +26,11 @@ const from = location.state?.from?.pathname||'/';
              .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    const logedIn = {
-            email:user.email
-    }
-    console.log(logedIn)
-//Bkend To Server token Conected and Token Date Send Start
-fetch('http://localhost:5000/jwt',{
-  method:'POST',
-  headers:{
-    'content-type':'application/json'
-  },
-  body:JSON.stringify(logedIn)
-})
-.then(res => res.json())
-.then(data =>{
-  console.log(data);
-  // Local Storage token Save..But is Not Best Way Browser Cookies Token Save is Best
-  localStorage.setItem('car-token', data.token)
-})
-////Bkend To Server token Conected and Token Date Send End
+    console.log(user)
+     navigate(from,{replace:true})
       event.target.reset()
     // ...
-    navigate(from,{replace:true})
+   
   })
   .catch((error) => {
     const errorCode = error.code;

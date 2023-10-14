@@ -45,7 +45,31 @@ const popup = () =>{
 useEffect(()=>{
  const unsubscribe = onAuthStateChanged(auth,currentUser =>{
     setUser(currentUser);
-    setLoading(false)
+    setLoading(false);
+     //Bkend To Server JWT token Conected and Token Date Send Start
+    if(currentUser && currentUser.email){
+          const logedIn = {
+            email:currentUser.email
+    }
+fetch('http://localhost:5000/jwt',{
+  method:'POST',
+  headers:{
+    'content-type':'application/json'
+  },
+  body:JSON.stringify(logedIn)
+})
+.then(res => res.json())
+.then(data =>{
+  console.log(data);
+  // Local Storage token Save..But is Not Best Way Browser Cookies Token Save is Best
+  localStorage.setItem('car-token', data.token)
+})
+
+    }
+    else{
+        localStorage.removeItem('car-token');
+    }
+    //Bkend To Server token Conected and Token Date Send End
   });
   return () =>{
     return unsubscribe();//function ta barbar observe korta taka sata stop korar jonno ata k akta variable ar modda nia return kora dia hoi,,,

@@ -12,6 +12,7 @@ const Bookings = () => {
     const componentPdf=useRef();
     const navigate = useNavigate()
     
+    // Booking data piked start
     const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(()=>{
         fetch(url,{
@@ -30,6 +31,8 @@ const Bookings = () => {
             }
           })
     },[url,navigate])
+
+    // Booking data piked End
 
  //delete work start
    const handleDelete = id =>{
@@ -89,6 +92,7 @@ const genaratedPdf = useReactToPrint({
 
     return (
         <div>
+          {/* pdf raf start */}
           <div ref={componentPdf} style={{width:'100%'}}>
              <div className="overflow-x-auto w-full ">
   <table className="table w-full">
@@ -115,8 +119,10 @@ const genaratedPdf = useReactToPrint({
   </table>
 </div>     
           </div>
-   
+          {/* pdf raf end */}
+   {/* pdf Button start */}
 <button onClick={genaratedPdf} className='btn btn-error'>PDF</button>
+{/* pdf button end */}
         </div>
     );
 };

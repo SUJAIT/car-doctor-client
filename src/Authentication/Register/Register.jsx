@@ -1,10 +1,14 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../AuthContext/AuthContext';
 import img from '../img/login.svg';
 const Register = () => {
+
     const {createUser} = useContext(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation()
+    const from = location.state?.from?.pathname||'/';
 
     //user userCreateHndler working start
     const userCreateHndler = event =>{
@@ -23,6 +27,7 @@ const Register = () => {
     // ...
     console.log(user)
     form.reset()
+    navigate(navigate(from,{replace:true}))
   })
   .catch((error) => {
     const errorCode = error.code;
